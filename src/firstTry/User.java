@@ -37,8 +37,8 @@ public class User {
 		       "priority: " + priority + "\n" +
 			   "numGuichet" + numGuichet;
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 		User moi=new User("1234",null,0,0,0,0,null,null);
 		System.out.println(moi.toString());
