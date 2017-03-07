@@ -1,6 +1,7 @@
 package firstTry;
 
 import java.sql.Time;
+import java.util.Random;
 
 
 public class User {
@@ -29,25 +30,44 @@ public class User {
 	
 	@Override
 	public String toString(){
-		return "id: " + id + "\n"+ "need: " + need + "\n"+ 
+		String user =  "--------------------\n" +
+	           "id: " + id + "\n"+ "need: " + need + "\n"+ 
 	           "arrivalTime: " + arrivalTime.toString() +  "\n"+
 			   "startQueueTime: " + startQueueTime.toString() + "\n"+
 			   "finishQueueTime: " + finishQueueTime.toString() + "\n"+
 			   "leavingTime: " + leavingTime.toString() + "\n" +
 		       "priority: " + priority + "\n" +
-			   "numGuichet" + numGuichet;
+			   "numGuichet: " + numGuichet +"\n--------------------";
+		System.out.println(user);
+		return user;
+	}
+	
+	public Time getRandArrivingTime(Time beginning, Time end){
+		final Random random = new Random();
+		long timeInMs=(long)random.nextInt(((int)end.getTime()-(int)beginning.getTime()+1))+(int)beginning.getTime();
+		Time arrivingTime = new Time(timeInMs);
+		System.out.println("Arriving Time: "+arrivingTime);
+		arrivalTime=arrivingTime;
+	    return arrivalTime;
+	}
+	
+	public String getRandService(){
+		final Random random = new Random();
+		String[] services={"Make passport","Make id card","Get allocations","Get birth certificate",
+				"Get information","Get nationality papers","Make vital card"};
+		int index=random.nextInt(services.length);
+		need=services[index];
+		return need;
 	}
 	
 	
 	public static void main(String[] args) {
 		User moi=new User("1234",null,0,0,0,0,null,null);
-		System.out.println(moi.toString());
-		
+		moi.getRandService();
+		moi.toString();
 	}
 
-	public static void HelloWorld(){
-		System.out.println("HelloWorld");
-	}
+	
 }
 
 	
