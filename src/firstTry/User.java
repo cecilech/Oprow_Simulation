@@ -45,6 +45,10 @@ public class User {
 		System.out.println(moi.toString());
 		
 	}
+
+	public static void HelloWorld(){
+		System.out.println("HelloWorld");
+	}
 }
 
 	
