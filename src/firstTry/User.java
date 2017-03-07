@@ -45,9 +45,7 @@ public class User {
 		
 	}
 
-	public static void HelloWorld(){
-		System.out.println("HelloWorld");
-	}
+
 }
 
 	
