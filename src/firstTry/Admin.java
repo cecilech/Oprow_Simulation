@@ -7,7 +7,7 @@ import java.sql.Time;
 public class Admin {
 
 	private String name;
-	private Time openingTime=new Time(0,0,0); // warning: initialize time at 1am.
+	private Time openingTime=new Time(0,0,0); // warning: initializes time at 1am.
 	private Time closingTime=new Time(0,0,0);
 	
 	
@@ -45,10 +45,11 @@ public class Admin {
 		double m=0.0;
 		double s=0.0;
 		
+		/*matrix based on a schedule from caf website giving affluence */
 		double[][] aff =
 		    {
 		        { m, m, s, s, m, m, s, s } , // tab[day][hour] 
-		        { w, w, m, m, m, m, w, w },    //as we take caf paris 15 as example, only four opening days
+		        { w, w, m, m, m, m, w, w },    //as we take caf paris 15 as example, only 4 opening days
 		        { w, w, w, w, w, w, m, m },   //monday tuesday thursday friday, from 9am to 5pm 
 		        { m, m, m, m, m, m, s, s },
 		    };

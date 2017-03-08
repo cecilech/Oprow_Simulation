@@ -6,16 +6,17 @@ import java.util.Random;
 
 public class User {
 
-	private String id;
-	private String need; 
+	private String id;   // id of user
+	private String need;    // need/service for which user comes
 	//private float clientPerf; 
 	private Time arrivalTime = new Time(0,0,0); // when user arrives at admin
-	private Time startQueueTime = new Time(0,0,0);
-	private Time finishQueueTime = new Time(0,0,0);
+	private Time startQueueTime = new Time(0,0,0);  // when user starts real queue (not borne's queue)
+	private Time finishQueueTime = new Time(0,0,0);  // when user finishes waiting
 	private Time leavingTime = new Time(0,0,0); // when user leaves admin
-	private String priority;
-	private String numGuichet;
+	private String priority;  //index of priority
+	private String numGuichet;  // number of the guichet where user has to go
 	
+	/*Constructor*/
 	User (String id, String need, long a, long b,long c,long d,String priority, String numGuichet){
 		this.id=id;
 		this.need="";
@@ -28,6 +29,7 @@ public class User {
 		
 	}
 	
+	/* displays user */
 	@Override
 	public String toString(){
 		String user =  "--------------------\n" +
@@ -42,6 +44,7 @@ public class User {
 		return user;
 	}
 	
+	/* generates a random time of arrival on a fixed time slot */
 	public Time getRandArrivingTime(Time beginning, Time end){
 		final Random random = new Random();
 		long timeInMs=(long)random.nextInt(((int)end.getTime()-(int)beginning.getTime()+1))+(int)beginning.getTime();
@@ -51,6 +54,7 @@ public class User {
 	    return arrivalTime;
 	}
 	
+	/* generates a service - will evolve */
 	public String getRandService(){
 		final Random random = new Random();
 		String[] services={"Make passport","Make id card","Get allocations","Get birth certificate",
