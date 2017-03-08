@@ -6,17 +6,16 @@ import java.util.Random;
 
 public class User {
 
-	private String id;   // id of user
-	private String need;    // need/service for which user comes
+	private String id;
+	private String need; 
 	//private float clientPerf; 
 	private Time arrivalTime = new Time(0,0,0); // when user arrives at admin
-	private Time startQueueTime = new Time(0,0,0);  // when user starts real queue (not borne's queue)
-	private Time finishQueueTime = new Time(0,0,0);  // when user finishes waiting
+	private Time startQueueTime = new Time(0,0,0);
+	private Time finishQueueTime = new Time(0,0,0);
 	private Time leavingTime = new Time(0,0,0); // when user leaves admin
-	private String priority;  //index of priority
-	private String numGuichet;  // number of the guichet where user has to go
+	private String priority; // 1:app+rdv ; 2:app+no_rdv ; 3:app+no_doc ; 4:no_app+loggin ; 5:no_app+first_Login ; 6:no_app+no_doc
+	private String numGuichet;
 	
-	/*Constructor*/
 	User (String id, String need, long a, long b,long c,long d,String priority, String numGuichet){
 		this.id=id;
 		this.need="";
@@ -29,7 +28,6 @@ public class User {
 		
 	}
 	
-	/* displays user */
 	@Override
 	public String toString(){
 		String user =  "--------------------\n" +
@@ -44,7 +42,6 @@ public class User {
 		return user;
 	}
 	
-	/* generates a random time of arrival on a fixed time slot */
 	public Time getRandArrivingTime(Time beginning, Time end){
 		final Random random = new Random();
 		long timeInMs=(long)random.nextInt(((int)end.getTime()-(int)beginning.getTime()+1))+(int)beginning.getTime();
@@ -54,7 +51,6 @@ public class User {
 	    return arrivalTime;
 	}
 	
-	/* generates a service - will evolve */
 	public String getRandService(){
 		final Random random = new Random();
 		String[] services={"Make passport","Make id card","Get allocations","Get birth certificate",
@@ -71,8 +67,41 @@ public class User {
 		moi.toString();
 	}
 
-	
+	public void setStartQueueTime(Time startQueueTime) {
+		this.startQueueTime = startQueueTime;
+	}
 
+	public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNeed() {
+        return need;
+    }
+
+    public void setNeed(String need) {
+        this.need = need;
+    }
+
+    public String getNumGuichet() {
+        return numGuichet;
+    }
+
+    public void setNumGuichet(String numGuichet) {
+        this.numGuichet = numGuichet;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 }
 
 	

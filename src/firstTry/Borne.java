@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class Borne {
     private String borneNum;
-    User inProgress; // user who is using the borne
-    private List<Time> timeNeed;
-    private Time timeRemaining;
+    User userInProgress; // user who is using the borne
+    private List<Time> timeNeed; // List contenant les temps nécessaire à la réalisations de la tache
+    private Time timeRemaining; //temps restant avant la fin de l'exécution de la tache
 
     Borne(String aBorneNum, String aBorneUse, User anInProgress, List<Time> aTimeNeed){
         borneNum = aBorneNum;
-        inProgress = anInProgress;
+        userInProgress = anInProgress;
         timeNeed = aTimeNeed;
     }
 
@@ -76,20 +76,9 @@ public class Borne {
     //   retourne TRUE si la borne est en cours d'utilisation, retourne FALSE si la borne n'est pas utilisé
     /////////////////////////////////////////////////////////////////////////////////////////////
     public boolean isUsed(){
-        return this.inProgress != null;
+        return this.userInProgress != null;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //   freeBorne
-    //   free la borne de l'utilisateur
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    public void freeBorne(){
-        this.inProgress = null;
-        //EN ATTENTE DORDRE
-    }
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //
-    /////////////////////////////////////////////////////////////////////////////////////////
+
 }
