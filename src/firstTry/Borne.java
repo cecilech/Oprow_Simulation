@@ -8,27 +8,35 @@ import java.util.List;
  */
 public class Borne {
     private String borneNum;
-    private String borneUse;
-    User inProgress;
+    User inProgress; // user who is using the borne
     private List<Time> timeNeed;
+    private Time timeRemaining;
 
-    //Borne()
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //   setBornUse
-    //   permet de définir le contexte d'utilisation de la borne: QR=> borne qui ne récupère que les QRcode; noQR=> Borne qui permet l'inscription des User
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    public void setBorneUse(String pBornUse){
-        borneUse = pBornUse;
+    Borne(String aBorneNum, String aBorneUse, User anInProgress, List<Time> aTimeNeed){
+        borneNum = aBorneNum;
+        inProgress = anInProgress;
+        timeNeed = aTimeNeed;
     }
 
+
     //////////////////////////////////////////////////////////////////////////////////////////////
-    //   getBornUse
+    //   setTimeRemaining
+    //   permet de définir le contexte d'utilisation de la borne: QR=> borne qui ne récupère que les QRcode; noQR=> Borne qui permet l'inscription des User
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void setTimeRemaining(Time timeRemaining) {
+        this.timeRemaining = timeRemaining;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //   getTimeRemaining
     //   permet de récuperer le contexte d'utilisation de la borne: QR=> borne qui ne récupère que les QRcode; noQR=> Borne qui permet l'inscription des User
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public String getBorneUse(){
-        return borneUse;
+
+
+    public Time getTimeRemaining() {
+        return timeRemaining;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,11 +51,11 @@ public class Borne {
     //   getBornNum
     //   permet de récuperer le numéro de la borne
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public String getBornNb(){
+    public String getBornNum(){
         return borneNum;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
     //   setTimeNeed
     //   permet de définir la liste timeNeed
     /////////////////////////////////////////////////////////////////////////////////////////////
