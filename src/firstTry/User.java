@@ -13,7 +13,7 @@ public class User {
 	private Time startQueueTime = new Time(0,0,0);
 	private Time finishQueueTime = new Time(0,0,0);
 	private Time leavingTime = new Time(0,0,0); // when user leaves admin
-	private String priority;
+	private String priority; // 1:app+rdv ; 2:app+no_rdv ; 3:app+no_doc ; 4:no_app+loggin ; 5:no_app+first_Login ; 6:no_app+no_doc
 	private String numGuichet;
 	
 	User (String id, String need, long a, long b,long c,long d,String priority, String numGuichet){
@@ -67,8 +67,41 @@ public class User {
 		moi.toString();
 	}
 
-	
+	public void setStartQueueTime(Time startQueueTime) {
+		this.startQueueTime = startQueueTime;
+	}
 
+	public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNeed() {
+        return need;
+    }
+
+    public void setNeed(String need) {
+        this.need = need;
+    }
+
+    public String getNumGuichet() {
+        return numGuichet;
+    }
+
+    public void setNumGuichet(String numGuichet) {
+        this.numGuichet = numGuichet;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 }
 
 	
