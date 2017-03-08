@@ -35,6 +35,7 @@ public class Admin {
 		
 	
 		
+				
 		final Random random = new Random();
 				
 		double weak=0.08; //weak affluence, perc. of total nb of people coming per day in pondered average
@@ -44,6 +45,9 @@ public class Admin {
 		double w=0.0;
 		double m=0.0;
 		double s=0.0;
+		double w=1.0;
+		double m=2.0;
+		double s=3.0;
 		
 		/*matrix based on a schedule from caf website giving affluence */
 		double[][] aff =
@@ -57,24 +61,72 @@ public class Admin {
 		/*BUG dans les if, passe que le premier*/
 		for (int i=0;i<aff.length;i++){
 			for (int j=0;j<aff[i].length;j++){
+						
 				if (aff[i][j]==w)
 					aff[i][j]=(weak-weak*delta) + ((weak+weak*delta) - (weak-weak*delta)) * random.nextDouble();
 				if (aff[i][j]==m)
+				
+				if (aff[i][j]== m)
 					aff[i][j]=(moderate-moderate*delta) + ((moderate+moderate*delta) - (moderate-moderate*delta)) * random.nextDouble();
+				
 				if (aff[i][j]==s)
 					aff[i][j]=(strong-strong*delta) + ((strong+strong*delta) - (strong-strong*delta)) * random.nextDouble();
 				System.out.print(aff[i][j]+" ");
+				
+				//System.out.print(aff[i][j]+" ");
 			}
 			System.out.println();
+			//System.out.println();
 		}
+		
 		return aff;
 	}	   
 	
+	public int getRandNbPeoplePerHour(double[][] affMatrix, String day, long hour){
+		int averagePeople=2400; //average people per day based on caf's figures
+		int nbPeople; //people coming on a given day and time
+		
+		String[] days={"monday","tuesday","thursday","friday"};
+		long[] hours={28800000,32400000,36000000,39600000,43200000,46800000,50400000,54000000};
+		int indexDay=-1;
+		int indexHour=-1;
+		
+		for (int i=0;i<days.length;i++){
+			if (days[i]==day)
+				indexDay=i;
+		}
+		
+		for (int i=0;i<hours.length;i++){
+			if (hours[i]==hour)
+				indexHour=i;
+		}
+		
+		nbPeople=(int)(affMatrix[indexDay][indexHour]*averagePeople);
+		
+		//System.out.println(nbPeople);
+		
+		return nbPeople;
+	}
+	
+	public int[] getPeopleComingPerHourPerDay(String day,double[][] affMatrix){
+		int[] coming={0,0,0,0,0,0,0,0};
+		long[] hours={28800000,32400000,36000000,39600000,43200000,46800000,50400000,54000000};
+				
+		for (int i=0;i<8;i++){
+			coming[i]=getRandNbPeoplePerHour(affMatrix,day,hours[i]);
+			System.out.print(coming[i]);
+			System.out.print(" ");
+		}
+		
+		System.out.print("\n");
+		return coming;
+	}
 	
 	
     public static void main(String[] args) {
     	
     	Admin admin=new Admin("CAF",28800000,57600000); // 9h-17h
+    	Admin admin=new Admin("CAF Paris 15",28800000,57600000); // 9h-17h
     	admin.toString();
     	
     	
@@ -87,5 +139,11 @@ public class Admin {
 		
     	admin.getAffMatrix();
    	
+    	double[][] affMatrix=admin.getAffMatrix();
+    	//admin.getRandNbPeoplePerHour(affMatrix, "tuesday", 46800000L);
+    	admin.getPeopleComingPerHourPerDay("monday",affMatrix);
+    	admin.getPeopleComingPerHourPerDay("tuesday",affMatrix);
+    	admin.getPeopleComingPerHourPerDay("thursday",affMatrix);
+    	admin.getPeopleComingPerHourPerDay("friday",affMatrix);
 	}
 }

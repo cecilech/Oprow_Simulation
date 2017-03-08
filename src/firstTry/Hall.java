@@ -34,7 +34,7 @@ public class Hall {
             hall.borneNoQRQueue.add(user);
         }
         else{
-            System.out.println("ERROR, USER " + user.getId() + "NON HAVE CORRECT STATUS");
+            System.out.println("ERROR, USER " + user.getId() + "WRONG STATUS");
         }
     }
 
