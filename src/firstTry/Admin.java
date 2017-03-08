@@ -2,6 +2,7 @@ package firstTry;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.sql.Time;
 
@@ -118,7 +119,7 @@ public class Admin {
 		
 		for (int i=0;i<4;i++){
 			for (int j=0;j<8;j++){
-				coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[i]);
+				coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[j]);
 				System.out.print(coming[i][j]);
 				System.out.print(" ");
 			}
@@ -130,10 +131,37 @@ public class Admin {
 		return coming;
 	}
 	
-	public List<User> getListPeople(int [][] comingMatrix){
+	public List<User> getListPeople(int [][] comingMatrix, String day){
 		List <User> coming=new ArrayList<>();
+		String[] days={"monday","tuesday","thursday","friday"};
+		int indexDay=-1;
+		for (int i=0;i<days.length;i++){
+			if (days[i]==day)
+				indexDay=i;
+		}
 		
-		return null;
+		
+		long[] hours={28800000,32400000,36000000,39600000,43200000,46800000,50400000,54000000,57600000};
+				
+		long time=28800000;  //9h
+		long oneHour=3600000;  // durée de 1h  //time<57600000
+		//parcours matrice du nb de gens qui viennent
+		
+			for (int j=0;j<8;j++){
+				int nb=0;
+				while (nb<comingMatrix[indexDay][j]){ 
+					User user=new User(null,0,0,0,0,null,null);
+					user.getRandArrivingTime(hours[j],hours[j+1]);
+					//System.out.println(hours[j]);
+				
+					coming.add(user);	
+					nb++;
+				}		
+				System.out.println(nb);
+			}			
+			System.out.println(coming);		
+			
+		return coming;
 		
 	}
 	
@@ -144,6 +172,7 @@ public class Admin {
 		  	
     	double[][] affMatrix=admin.getAffMatrix();
     	//admin.getRandNbPeoplePerHour(affMatrix, "tuesday", 46800000L);
-    	admin.getPeopleComingPerHourPerDay(affMatrix);
-	}
+    	int[][] comingMatrix=admin.getPeopleComingPerHourPerDay(affMatrix);
+    	admin.getListPeople(comingMatrix,"tuesday");
+    }
 }
