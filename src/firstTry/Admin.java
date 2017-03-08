@@ -1,7 +1,8 @@
 package firstTry;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
-import java.sql.Time;
 import java.sql.Time;
 
 public class Admin {
@@ -9,6 +10,7 @@ public class Admin {
 	private String name;
 	private Time openingTime=new Time(0,0,0); // warning: initializes time at 1am.
 	private Time closingTime=new Time(0,0,0);
+	private int[] comingPeople;
 	
 	
 	Admin(String name, long opening,long closure){
@@ -33,18 +35,13 @@ public class Admin {
 	 *   we don't care if the sum for each day is > 100% bc the nb of people coming has to fluctuate 
 	 */
 		
-	
-		
 				
 		final Random random = new Random();
 				
 		double weak=0.08; //weak affluence, perc. of total nb of people coming per day in pondered average
 		double moderate=0.15; //moderate aff
 		double strong=0.30; //strong aff
-		double delta=0.1; 
-		double w=0.0;
-		double m=0.0;
-		double s=0.0;
+		double delta=0.1;
 		double w=1.0;
 		double m=2.0;
 		double s=3.0;
@@ -71,11 +68,10 @@ public class Admin {
 				
 				if (aff[i][j]==s)
 					aff[i][j]=(strong-strong*delta) + ((strong+strong*delta) - (strong-strong*delta)) * random.nextDouble();
-				System.out.print(aff[i][j]+" ");
+				
 				
 				//System.out.print(aff[i][j]+" ");
 			}
-			System.out.println();
 			//System.out.println();
 		}
 		
@@ -108,42 +104,46 @@ public class Admin {
 		return nbPeople;
 	}
 	
-	public int[] getPeopleComingPerHourPerDay(String day,double[][] affMatrix){
-		int[] coming={0,0,0,0,0,0,0,0};
+	public int[][] getPeopleComingPerHourPerDay(double[][] affMatrix){
+		int[][] coming =
+		    {
+		    		{ 0, 0, 0, 0, 0, 0, 0, 0 } , // tab[day][hour] 
+			        { 0, 0, 0, 0, 0, 0, 0, 0 },    //as we take caf paris 15 as example, only 4 opening days
+			        { 0, 0, 0, 0, 0, 0, 0, 0 },   //monday tuesday thursday friday, from 9am to 5pm 
+			        { 0, 0, 0, 0, 0, 0, 0, 0 },
+			};
+			
 		long[] hours={28800000,32400000,36000000,39600000,43200000,46800000,50400000,54000000};
-				
-		for (int i=0;i<8;i++){
-			coming[i]=getRandNbPeoplePerHour(affMatrix,day,hours[i]);
-			System.out.print(coming[i]);
-			System.out.print(" ");
+		String[] days={"monday","tuesday","thursday","friday"};
+		
+		for (int i=0;i<4;i++){
+			for (int j=0;j<8;j++){
+				coming[i][j]=getRandNbPeoplePerHour(affMatrix,days[i],hours[i]);
+				System.out.print(coming[i][j]);
+				System.out.print(" ");
+			}
+			System.out.print("\n");
 		}
 		
-		System.out.print("\n");
+		
+		
 		return coming;
 	}
 	
+	public List<User> getListPeople(int [][] comingMatrix){
+		List <User> coming=new ArrayList<>();
+		
+		return null;
+		
+	}
 	
     public static void main(String[] args) {
     	
-    	Admin admin=new Admin("CAF",28800000,57600000); // 9h-17h
     	Admin admin=new Admin("CAF Paris 15",28800000,57600000); // 9h-17h
-    	admin.toString();
-    	
-    	
-    	/* generate random time*/
-		/*final Random random = new Random();
-		final int millisInDay = 24*60*60*1000; //24H
-		Time time = new Time((long)random.nextInt(millisInDay));
-		System.out.println(time.toString());*/
-		
-		
-    	admin.getAffMatrix();
-   	
+    	admin.toString();	
+		  	
     	double[][] affMatrix=admin.getAffMatrix();
     	//admin.getRandNbPeoplePerHour(affMatrix, "tuesday", 46800000L);
-    	admin.getPeopleComingPerHourPerDay("monday",affMatrix);
-    	admin.getPeopleComingPerHourPerDay("tuesday",affMatrix);
-    	admin.getPeopleComingPerHourPerDay("thursday",affMatrix);
-    	admin.getPeopleComingPerHourPerDay("friday",affMatrix);
+    	admin.getPeopleComingPerHourPerDay(affMatrix);
 	}
 }
