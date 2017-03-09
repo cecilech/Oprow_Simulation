@@ -6,27 +6,27 @@ import java.util.Collections;
 import java.util.Random;
 import java.sql.Time;
 
-public class Admin {
+public class Admin{
 
 	private String name;
 	private Time openingTime=new Time(0,0,0); // warning: initializes time at 1am.
 	private Time closingTime=new Time(0,0,0);
-	private int[] comingPeople;
 	
-	
+	/*Constructor*/
 	Admin(String name, long opening,long closure){
 		this.name=name;
 		openingTime.setTime(opening);
 		closingTime.setTime(closure);
 	}
 	
+	/* Display admins */
 	public String toString(){
 		String a="Admin: "+ name + "\nOpening Time: "+openingTime+"\nClosing Time: "+closingTime;
 		System.out.println(a);
 		return a;
 	}
 	
-	
+	/* returns a matrix of percentages [day][opening hours] */
 	public double[][] getAffMatrix(){
 	/* this fct generates a matrix giving a percentage for each hour of each day for caf paris 15*/
 	/* to understand my idea:
@@ -79,6 +79,7 @@ public class Admin {
 		return aff;
 	}	   
 	
+	/* returns a nb of people coming to the admin per hour based on affMatrix  */
 	public int getRandNbPeoplePerHour(double[][] affMatrix, String day, long hour){
 		int averagePeople=2400; //average people per day based on caf's figures
 		int nbPeople; //people coming on a given day and time
@@ -105,6 +106,7 @@ public class Admin {
 		return nbPeople;
 	}
 	
+	/* returns an array of people coming for each time slot during one week [day][opening hours] */
 	public int[][] getPeopleComingPerHourPerDay(double[][] affMatrix){
 		int[][] coming =
 		    {
@@ -125,12 +127,10 @@ public class Admin {
 			}
 			System.out.print("\n");
 		}
-		
-		
-		
 		return coming;
 	}
 	
+	/* generates a list of users coming during one day, sorted by arrivalTime */
 	public List<User> getListPeople(int [][] comingMatrix, String day){
 		List <User> coming=new ArrayList<>();
 		String[] days={"monday","tuesday","thursday","friday"};
@@ -147,19 +147,20 @@ public class Admin {
 		long oneHour=3600000;  // durée de 1h  //time<57600000
 		//parcours matrice du nb de gens qui viennent
 		
-			for (int j=0;j<8;j++){
-				int nb=0;
-				while (nb<comingMatrix[indexDay][j]){ 
-					User user=new User(null,0,0,0,0,null,null);
-					user.getRandArrivingTime(hours[j],hours[j+1]);
-					//System.out.println(hours[j]);
-				
-					coming.add(user);	
-					nb++;
-				}		
-				System.out.println(nb);
-			}			
-			System.out.println(coming);		
+		for (int j=0;j<8;j++){
+			int nb=0;
+			while (nb<comingMatrix[indexDay][j]){ 
+				User user=new User(null,0,0,0,0,null,null);
+				user.getRandArrivingTime(hours[j],hours[j+1]);
+				coming.add(user);	
+				nb++;
+			}		
+			//System.out.println(nb);
+		}			
+					
+		Collections.sort(coming);
+			
+		System.out.println(coming);
 			
 		return coming;
 		

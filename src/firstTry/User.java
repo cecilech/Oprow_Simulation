@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class User {
+public class User implements Comparable<User>{
 
 	private int id;
 	private static AtomicInteger next_id = new AtomicInteger(0);
@@ -110,11 +110,31 @@ public class User {
         this.priority = priority;
     }
     
-	public static void main(String[] args) {
+    @Override
+    public int compareTo(User user2) {
+		// Time comparison
+    	long a=arrivalTime.getTime();
+    	long b= user2.arrivalTime.getTime();
+    	if (a<b)
+    		return -1;
+    	if (b<a)
+    		return +1;
+    	
+    	return 0;
+    }
+    
+    public Time getArrivalTime(){
+    	return arrivalTime;
+    }
+    
+    
+   	public static void main(String[] args) {
 		User moi=new User(null,0,0,0,0,null,null);
 		moi.getRandService();
 		moi.toString();
 	}
+
+	
 }
 
 	
