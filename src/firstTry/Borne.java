@@ -62,7 +62,6 @@ public class Borne {
     public void setTimeNeed(List<Time> pTimeNeed){
         timeNeed = pTimeNeed;
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////
     //   getTimeNeed
     //   permet de récuperer l numéro de la borne
@@ -70,7 +69,6 @@ public class Borne {
     public List<Time> getTimeNeed(){
         return timeNeed;
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////
     //   isUsed
     //   retourne TRUE si la borne est en cours d'utilisation, retourne FALSE si la borne n'est pas utilisé
@@ -78,7 +76,4 @@ public class Borne {
     public boolean isUsed(){
         return this.userInProgress != null;
     }
-
-
-
 }
